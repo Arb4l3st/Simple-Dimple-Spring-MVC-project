@@ -1,0 +1,37 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "ru.arbalest.dbsetting.ConnectionSettings",
+      "name": "mainPool",
+      "type": "ru.arbalest.dbsetting.ConnectionSettings"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "ru.arbalest.dbsetting.ConnectionSettings",
+      "name": "mainPool.jdbc-driver",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "ru.arbalest.dbsetting.ConnectionSettings",
+      "name": "mainPool.jdbc-max-pool-size",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "ru.arbalest.dbsetting.ConnectionSettings",
+      "name": "mainPool.jdbc-password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "ru.arbalest.dbsetting.ConnectionSettings",
+      "name": "mainPool.jdbc-string",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "ru.arbalest.dbsetting.ConnectionSettings",
+      "name": "mainPool.jdbc-user",
+      "type": "java.lang.String"
+    }
+  ]
+}

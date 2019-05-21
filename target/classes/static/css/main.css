@@ -1,0 +1,29 @@
+.btn-primary {
+    background-color: #3393c7d4;
+    border-color: #849db7;
+}
+.btn-primary:hover {
+    background-color: #0871abdb;
+    border-color: #77c3ecdb;
+}
+.btn-primary:not(:disabled):not(.disabled).active,.btn-primary:not(:disabled):not(.disabled):active,.show>.btn-primary.dropdown-toggle{
+    color:#fff;
+    background-color:#0b5e8ce0;
+    border-color:#0b5e8ce0
+}
+.button-footer {
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: flex-end;
+    -ms-flex-align: center;
+    -ms-flex-pack: end;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+
+}
+.button-footer>:not(:last-child) {
+    margin-right: .25rem;
+}
+.button-footer>:not(:first-child) {
+    margin-left: .25rem;
+}
