@@ -13,18 +13,9 @@ import ru.arbalest.request.UserEditRequest;
 import ru.arbalest.request.UserRequest;
 import ru.arbalest.services.CompanyService;
 import ru.arbalest.services.UserService;
-import ru.arbalest.models.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-/*
-GET ─ получить данные
-PUT ─ создать данные
-POST ─ редактировать данные
-DELETE ─ удалить данные
-
- */
 @RestController
 @RequestMapping(value = "/index")
 public class MapController {
@@ -78,12 +69,7 @@ public class MapController {
                     companyRequest.getTin()
             );
         }
-
-        //Перенаправление на GET метод
-        RedirectView redirectView = new RedirectView("index");
-        redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-        modelAndView.setView(redirectView);
-        //обновление данных таблиц в кнопках компании/участники
+        redirectAndRefresh(modelAndView);
         this.setAttributes(model);
         return modelAndView;
     }
@@ -105,10 +91,7 @@ public class MapController {
                     userEditRequest.getIdNotEdit()
             );
         }
-
-        RedirectView redirectView = new RedirectView("index");
-        redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-        modelAndView.setView(redirectView);
+        redirectAndRefresh(modelAndView);
         this.setAttributes(model);
         return modelAndView;
     }
@@ -136,11 +119,40 @@ public class MapController {
                     userEditRequest.getIdNotEdit()
             );
         }
+        redirectAndRefresh(modelAndView);
+        this.setAttributes(model);
+        return modelAndView;
+    }
+
+    @PostMapping(params = "filterUser")
+    public Model setFilter(
+            ModelAndView modelAndView,
+            Model model,
+            @ModelAttribute UserRequest userRequest
+    ) throws JSONException {
+        JSONArray userArrayUPD = converterToJSON.getJSONArrayFromAllUsers(userService.getUsersByCompany(userRequest.getCompanyNameUser()));
+        model.addAttribute("userArray", userArrayUPD);
+        redirectAndRefresh(modelAndView);
+        return model;
+    }
+
+    @PostMapping(params = "undoFilterUsers")
+    public ModelAndView undoFilter(
+            ModelAndView modelAndView,
+            Model model
+    ) throws JSONException {
+        redirectAndRefresh(modelAndView);
+        this.setAttributes(model);
+        return modelAndView;
+    }
+
+    private void redirectAndRefresh(
+            ModelAndView modelAndView
+    ){
+        //Перенаправление на GET метод
         RedirectView redirectView = new RedirectView("index");
         redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
         modelAndView.setView(redirectView);
-        this.setAttributes(model);
-        return modelAndView;
     }
 
 }

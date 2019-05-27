@@ -29,17 +29,31 @@
                 Создать
             </button>
             <div style="padding-top: 10px"></div>
-            <form method="get">
-                <div class="btn-group-vertical btn-block">
-                    <button type="button" class="btn btn-outline-secondary" id="companyButton">Компании</button>
-                    <button type="button" class="btn btn-outline-secondary" id="userButton">Участники</button>
-                </div>
-            </form>
-
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="companyButton" data-toggle="pill" href="#v-pills-company" role="tab" aria-controls="v-pills-home" aria-selected="true">Компании</a>
+                <a class="nav-link" id="userButton" data-toggle="pill" href="#v-pills-user" role="tab" aria-controls="v-pills-profile" aria-selected="false">Участники</a>
+            </div>
         </div>
         <div class="col">
-                <div id="JSONdata" align="center">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-company" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div id="v-pills-company-content">
+                    </div>
                 </div>
+                <div class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <form method="post">
+                            <button type="button" class="btn btn-primary filter-button" data-toggle="modal" data-target="#filterModal" id="filterUserButton" name="filterUserButton">
+                                Фильтр
+                            </button>
+                            <button type="submit" class="btn btn-dark filter-button" id="undoFilterUsers" name="undoFilterUsers">
+                                Сброс
+                            </button>
+                        </form>
+                        <div style="padding-top: 10px"></div>
+                        <div id="v-pills-user-content">
+                        </div>
+                </div>
+            </div>
         </div>
         <!-- Modal for companies -->
         <div class="modal fade" id="companiesModal" tabindex="-1" role="dialog" aria-labelledby="companiesModal" aria-hidden="true">
@@ -99,8 +113,8 @@
                                 <input type="email" class="form-control" name = "email" id="email"  placeholder="employee@company.com">
                             </div>
                             <div class="form-group">
-                                <label for="CompanySelector">Компания</label>
-                                <select class="form-control" id="CompanySelector" name="companyNameUser">
+                                <label for="companySelector">Компания</label>
+                                <select class="form-control" id="companySelector" name="companyNameUser">
                                 </select>
                             </div>
                             <div class="button-footer">
@@ -136,47 +150,63 @@
                 </div>
             </div>
         </div>
+        <!-- Modal for filter in users -->
+        <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="usersModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="filterModalLable">Фильтр по работникам</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            <label for="optionalSelectorFilter">Компания:</label>
+                            <select class="form-control" id="optionalSelectorFilter" name="companyNameUser">
+                            </select>
+                            <div class="button-footer">
+                                <button type="submit" class="btn btn-primary" id="filterUser" name="filterUser">Применить</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
-    var companyNameArr = { "d": ${companyNamesArray}};
     var variable = 1;
+    var companyNameArr = { "d": ${companyNamesArray}};
     var companyArr = { "d": ${companyArray}};
     var userArr = { "d": ${userArray}};
     $(function() {
-        $('#CompanySelector').html(OptionSelector(companyNameArr.d));
+        $('#companySelector').html(OptionSelector(companyNameArr.d));
+        $('#optionalSelectorFilter').html(OptionSelector(companyNameArr.d));
     });
 
     $(function() {
         if (companyArr.d.length > 0){
-            $('#JSONdata').html(TableView(companyArr.d, "table table-hover", true))
+            $('#v-pills-company-content').html(TableView(companyArr.d, "table table-hover", true))
         }
         else{
-            $('#JSONdata').html("<h5>Здесь пока ничего не создано.</h5>");
+            $('#v-pills-company-content').html("<h1 class=\"display-4\" style=\"font-size: 2rem\">Здесь пока ничего не создано.</h5>");
+        }
+        if (userArr.d.length > 0){
+            $('#v-pills-user-content').html(TableView(userArr.d, "table table-hover", true));
+        }
+        else{
+            $('#v-pills-user-content').html("<h1 class=\"display-4\" style=\"font-size: 2rem\">Здесь пока ничего не создано.</h5>");
         }
     });
 
     $(function() {
         $('#companyButton').click(function() {
-            if (companyArr.d.length > 0){
-                $('#JSONdata').html(TableView(companyArr.d, "table table-hover", true))
-            }
-            else{
-                $('#JSONdata').html("<h1 class=\"display-4\" style=\"font-size: 2rem\">Здесь пока ничего не создано.</h1>");
-            }
             variable = 1;
         })
-    });
-
-    $(function() {
         $('#userButton').click(function() {
-        if (userArr.d.length > 0){
-            $('#JSONdata').html(TableView(userArr.d, "table table-hover", true));
-        }
-        else{
-            $('#JSONdata').html("<h1 class=\"display-4\" style=\"font-size: 2rem\">Здесь пока ничего не создано.</h5>");
-        }
             variable = 0;
         })
     });

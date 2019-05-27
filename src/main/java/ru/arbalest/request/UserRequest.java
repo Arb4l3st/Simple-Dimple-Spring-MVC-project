@@ -47,4 +47,5 @@ public class UserRequest {
     public void setCompanyNameUser(String companyName) {
         this.companyNameUser = companyName;
     }
+
 }

@@ -11,6 +11,14 @@
     background-color:#0b5e8ce0;
     border-color:#0b5e8ce0
 }
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #23486f;
+}
+.filter-button{
+    margin-right: .5rem;
+    width: 12%;
+}
 .button-footer {
     display: -ms-flexbox;
     display: flex;
